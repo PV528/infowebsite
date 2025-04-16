@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (answer === 'šankipo') {
         response.style.color = 'green';
         response.textContent = 'Ok naj ti bo hahahah ...';
-        setTimeout(() => window.location.href = 'index.html', 2000);
+        setTimeout(() => window.location.href = 'main.html', 2000);
       } else {
         response.style.color = 'darkred';
         response.textContent = 'Napačen odgovor. Saj veš, ampak ali se spomniš? ;)';
