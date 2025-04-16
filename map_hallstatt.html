@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Hallstatt – Interaktivni zemljevid</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/salzburg_map.css"> <!-- Lahko uporabiš isti CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="main.html" class="nav-link">Domača stran</a>
+    <a href="salzburg.html" class="nav-link">Salzburg</a>
+    <a href="halstatt.html" class="nav-link">Hallstatt</a>
+    <a href="gosausee.html" class="nav-link">Gosausee</a>
+  </nav>
+
+  <h1>🗺️ Znamenitosti Hallstatta</h1>
+  <div id="map" style="height: 600px;"></div>
+
+  <script>
+    const map = L.map('map').setView([47.5615, 13.6481], 14);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    const hallstattAttractions = [
+      {
+        name: "⛏️ Rudnik soli Hallstatt",
+        coords: [47.55583, 13.64583],
+        description: "Najstarejši rudnik soli na svetu s podzemnimi ogledi in vlakcem.",
+        image: "slike/saltmine_hallstatt.jpg",
+        open_hours: "29.3.2025 - 31.8.2025	9.30 a.m. - 4.00* p.m.",
+        entry_fee: "43 € za gondolo in rudnik soli",
+        url: "https://www.salzwelten.at/en/hallstatt"
+      },
+      {
+        name: "🏛️ Muzej Hallstatt",
+        coords: [47.56167, 13.64889],
+        description: "Zgodovinski muzej z arheološkimi najdbami iz Halštatske kulture.",
+        image: "slike/Hallstatt_Museum.jpg",
+        open_hours: "Vsak dan od 10 do 16:00",
+        entry_fee: "Odrasli: 12 €, študenti: 9 €",
+        url: "https://www.museum-hallstatt.at/"
+      },
+      {
+        name: "🌄 Skywalk 'World Heritage View'",
+        coords: [47.56111, 13.64333],
+        description: "Razgledna ploščad 270 m nad mestom s pogledom na jezero in gore.",
+        image: "slike/skywalk.jpg",
+        open_hours: "29.3.2025 - 31.8.2025	9.00 a.m. - 6.00* p.m. (za gondolo - možno iti peš)",
+        entry_fee: "24 € za obe smeri",
+        url: "https://www.hallstatt.net"
+      },
+      {
+        name: "🦴 Kostnica & kapela sv. Mihaela",
+        coords: [47.5612, 13.6489],
+        description: "Zbirka več kot 1200 umetelno poslikanih lobanj.",
+        image: "slike/st_michael_chapel.jpg",
+        open_hours: "7.00 - 19.10 Kostnica: Od maja do septembra: Od ponedeljka do nedelje, od 10:00 AM do 6:00 PM. Od oktobra do aprila: od srede do nedelje, od 11:30 do 3:30",
+        entry_fee: "Odrasli 2 €, otroci 0.50 €",
+        url: "https://www.hallstatt.net"
+      },
+      {
+        name: "🛶 Plovba po jezeru",
+        coords: [47.55500, 13.65194],
+        description: "Vožnja s čolnom ali ladjico z razgledom na vas in gorsko kuliso.",
+        image: "slike/boat_ride.jpg",
+        open_hours: "/",
+        entry_fee: "/",
+        url: "https://www.hallstatt.net"
+      },
+      {
+        name: "❄️ Dachsteinske ledene jame",
+        coords: [47.53333, 13.71944], // Near Obertraun
+        description: "Impresivne ledene formacije, podzemni svet kapnikov in vodenih ogledov pod ledenikom Dachstein.",
+        open_hours: "Maj – oktober: 9:00 – 16:30 (glede na vreme)",
+        entry_fee: "Odrasli: €36 (vključno z gondolo in jamo)",
+        image: "slike/dachstein_ice_cave.jpg",
+        url: "https://www.dachstein-salzkammergut.com/en/adventure-worlds/dachstein-giant-ice-cave/"
+      }
+    ];
+
+    hallstattAttractions.forEach(attraction => {
+      L.marker(attraction.coords)
+        .addTo(map)
+        .bindPopup(`
+          <div class="popup-title">${attraction.name}</div>
+          ${attraction.image ? `<img src="${attraction.image}" alt="${attraction.name}" style="width: 100%; border-radius: 8px; margin-bottom: 8px;">` : ''}
+          <div class="popup-desc">${attraction.description}</div>
+          <div class="popup-desc">Odpiralni čas: ${attraction.open_hours}</div>
+          <div class="popup-desc">Vstopnina: ${attraction.entry_fee}</div>
+          <div class="popup-desc">Url: ${attraction.url ? `<a href="${attraction.url}" target="_blank" style="color: #007BFF; text-decoration: none; font-weight: 500;" onmouseover="this.style.color='#0056b3'" onmouseout="this.style.color='#007BFF'">
+  Obišči spletno stran
+</a>
+` : ''}</div>
+      `);
+    });
+  </script>
+
+</body>
+</html>

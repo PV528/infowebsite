@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Salzburg Attractions Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/salzburg_map.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="main.html" class="nav-link">Domača stran</a>
+        <a href="salzburg.html" class="nav-link">Salzburg</a>
+        <a href="halstatt.html" class="nav-link">Hallstatt</a>
+        <a href="gosausee.html" class="nav-link">Gosausee</a>
+      </nav>
+      
+<h1>🗺️ Znamenitosti Salzburga</h1>
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([47.7595, 13.0550], 11);
+  
+  const restaurantIcon = L.icon({
+  iconUrl: "slike/rastauranticon.png", // make sure this path is correct!
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -28]
+});
+
+  // Add OpenStreetMap tile layer
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  // Add some attractions
+  const attractions = [
+  {
+    name: "🏰 Trdnjava Hohensalzburg",
+    coords: [47.7968, 13.0486],
+    description: "Ena največjih ohranjenih srednjeveških trdnjav v Evropi.",
+    open_hours: "Jan–Apr & Oct–Dec: 9:30–17:00 | Maj–Sep: 8:30–20:00",
+    entry_fee: "Osnovna: €14.50 / All-Inclusive: €18.00",
+    image: "slike/hohensalzburg.jpg",
+    url: "https://www.festung-hohensalzburg.at/en/"
+  },
+  {
+    name: "🎵 Mozartova rojstna hiša",
+    coords: [47.8028, 13.0430],
+    description: "Hiša, kjer se je rodil Wolfgang Amadeus Mozart. Danes je muzej.",
+    open_hours: "Vsak dan: 9:00–17:30",
+    entry_fee: "Odrasli: €12, Študenti: €10",
+    image: "slike/mozart_house.jpg",
+    url: "https://mozarteum.at/museum/"
+  },
+  {
+    name: "🌸 Vrtovi Mirabell",
+    coords: [47.8058, 13.0413],
+    description: "Čudoviti baročni vrtovi s kiparskimi in cvetličnimi motivi.",
+    open_hours: "Vrtovi: 6:00 – mrak | Oranžerija: 9:00 – 16:00",
+    entry_fee: "Brezplačno",
+    image: "slike/mirabel_gardens.jpg",
+    url: "https://www.salzburg.info/en/sights/top10/mirabell-palace-gardens"
+  },
+  {
+    name: "⛪ Salzburška katedrala",
+    coords: [47.7986, 13.0456],
+    description: "Baročna stolnica s čudovito arhitekturo in bogato zgodovino.",
+    open_hours: "Mar–Jul: Pon–Sob 8:00–18:00, Ned & prazniki 13:00–18:00",
+    entry_fee: "Odrasli: €5",
+    image: "slike/katedrala_salzburg.webp",
+    url: "https://www.salzburg.info/en/sights/churches-cemeteries/salzburger-cathedral"
+  },
+  {
+    name: "✈️ Hangar-7",
+    coords: [47.7919, 13.0119],
+    description: "Moderna stavba z Red Bull letali, umetnostjo in restavracijami.",
+    open_hours: "Trenutno zaprto do maja 2025 (prenova)",
+    entry_fee: "Brezplačno",
+    image: "slike/hangar_7.jpg",
+    url: "https://www.salzburg.info/en/sights/museums/hangar-7"
+  },
+  {
+    name: "🦁 Salzburški živalski vrt",
+    coords: [47.7572, 13.0653],
+    description: "Družinam prijazen živalski vrt z več kot 120 vrstami živali.",
+    open_hours: "Apr–Sep: 9:00 – 18:00 (zadnji vstop 1h pred zaprtjem)",
+    entry_fee: "Odrasli: €16",
+    image: "slike/hellbrun_zoo.jpg",
+    url: "https://www.salzburg.info/en/sights/top10/zoo-salzburg"
+  },
+  {
+    name: "💦 Dvorec Hellbrunn in vodne igre",
+    coords: [47.7606, 13.0639],
+    description: "Renesančni dvorec z vrtovi, znan po zabavnih vodnih igrah.",
+    open_hours: "Mar–Apr: 9:30–17:30 | Maj–Jun: 9:30–18:30",
+    entry_fee: "Odrasli: €15",
+    image: "slike/hellbrun_dvorec.jpg",
+    url: "https://www.hellbrunn.at/en/"
+  },
+  {
+    name: "🧪 Haus der Natur",
+    coords: [47.8000, 13.0436],
+    description: "Velik naravoslovni muzej z dinozavri, akvarijem in interaktivnimi vsebinami.",
+    open_hours: "Vsak dan: 9:00 – 17:00",
+    entry_fee: "Odrasli: €15 | Študenti: €12",
+    image: "slike/haus_natur.webp",
+    url: "https://www.salzburg.info/de/sehenswertes/top10/haus-der-natur"
+  },
+  {
+    name: "⛏️ Rudnik soli Hallein",
+    coords: [47.6673, 13.0897],
+    description: "Zgodovinski rudnik soli s podzemnimi ogledi, vlakcem in tuneli.",
+    open_hours: "Vsak dan: 9:00 – 17:00",
+    entry_fee: "Odrasli: €34",
+    image: "slike/hallein_mine.jpg",
+    url: "https://www.salzwelten.at/en/salzburg/prices-opening-hours"
+  }
+];
+
+const restaurants = [
+  {
+    name: "🍽️ St. Peter Stiftskulinarium",
+    coords: [47.7969, 13.0442],
+    image: "slike/st_peter.jpg",
+    meni:"https://www.stpeter.at/wp-content/uploads/2023/05/Speisekarte-Peter_AB-12.05.2023_DE.pdf",
+    open_hours: "Od ponedelja do petka: od 12:30 do 23:00. Sobota in nedelja: Od 10:00 do 23:00",
+    description: "Ena najstarejših restavracij v Evropi, znana po vrhunski kulinariki.",
+    url: "https://www.stpeter-stiftskulinarium.at/"
+  },
+  {
+    name: "🍖 Pauli Stubm",
+    coords: [47.7964, 13.0481],
+    image: "slike/pauli_Stubm.jpg",
+    meni:"https://www.paul-stube.at/menu/",
+    open_hours: "Od torka do sobote: od 17:00 do 24:00. Nedelja in ponedeljek zaprto",
+    description: "Tradicionalna avstrijska gostilna z domačim ambientom.",
+    url: "https://www.paulistubm.at/"
+  },
+  {
+    name: "🍺 Zirkelwirt",
+    coords: [47.7981, 13.0494],
+    image: "slike/zirkelwirt.jpg",
+    meni:"https://inter-cdn.com/images/document/13686026/Speisekarte01-2025.pdf",
+    open_hours: "Vsak dan od 11:30 do 23:00",
+    description: "Priljubljena pivnica z okusno hrano in vrhunskim pivom.",
+    url: "https://www.zirkelwirt.com/"
+  }
+];
+
+  attractions.forEach(attraction => {
+  L.marker(attraction.coords)
+    .addTo(map)
+    .bindPopup(`
+  <div class="popup-title">${attraction.name}</div>
+  ${attraction.image ? `<img src="${attraction.image}" alt="${attraction.name}" style="width: 100%; border-radius: 8px; margin-bottom: 8px;">` : ''}
+  <div class="popup-desc">${attraction.description}</div>
+  <div class="popup-desc">Odpiralni čas: ${attraction.open_hours}</div>
+  <div class="popup-desc">Vstopnina: ${attraction.entry_fee}</div>
+  <div class="popup-desc"><a href="${attraction.url}" target="_blank" style="color: #007BFF;">Obišči spletno stran</a></div>
+`);
+
+});
+
+restaurants.forEach(restaurant => {
+  L.marker(restaurant.coords, { icon: restaurantIcon })
+    .addTo(map)
+    .bindPopup(`
+      <div class="popup-title">${restaurant.name}</div>
+      <div class="popup-desc">${restaurant.image ? `<img src="${restaurant.image}" alt="${restaurant.name}" style="width: 100%; border-radius: 8px; margin-bottom: 8px;">` : ''}</div>
+      <div class="popup-desc">${restaurant.description}</div>
+      <div class="popup-desc">Odpiralni čas: ${restaurant.open_hours}</div>
+      <div class="popup-desc"><a href="${restaurant.meni}" target="_blank" style="color: #007BFF; text-decoration: none; font-weight: 500;" onmouseover="this.style.color='#0056b3'" onmouseout="this.style.color='#007BFF'">Poglej jedilnik</a></div>
+      <div class="popup-desc"><a href="${restaurant.url}" target="_blank" style="color: #007BFF; text-decoration: none; font-weight: 500;" onmouseover="this.style.color='#0056b3'" onmouseout="this.style.color='#007BFF'">Obišči spletno stran</a></div>`);
+});
+</script>
+
+</body>
+</html>

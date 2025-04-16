@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: lavenderblush;
+}
+
+.login-container {
+    text-align: center;
+}
+
+.banter {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #333;
+}
+
+.jumping-button {
+    padding: 15px 30px;
+    font-size: 20px;
+    background-color: #c9fad1;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.jumping-button:hover {
+    background-color: #87e497;
+}
+
+.jumping-button:focus {
+    outline: none;
+}
+
+#rps-input {
+    font-size: 18px;
+    width: 250px;
+}
+
+#rps-question p {
+    font-size: 18px;
+    color: #333;
+}

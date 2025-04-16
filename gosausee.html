@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Salzburg Attractions Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/gosausee.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="main.html" class="nav-link">Domača stran</a>
+        <a href="salzburg.html" class="nav-link">Salzburg</a>
+        <a href="halstatt.html" class="nav-link">Hallstatt</a>
+        <a href="gosausee.html" class="nav-link">Gosausee</a>
+      </nav>
+      
+<h1>Gosausee</h1>
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([47.52889, 13.50667], 14);
+
+  // Add OpenStreetMap tile layer
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  const attractions = [
+  {
+    name: "🌄 Vorderer Gosausee",
+    coords: [47.52889, 13.50667],
+    description: "Ledeniško jezero s panoramskimi pogledi na Dachstein. Idealno za pohodništvo in fotografijo.",
+    open_hours: "Vedno odprto",
+    entry_fee: "Brezplačno",
+    image: "slike/gosausee2.jpeg",
+  },
+  {
+    name: "🧗‍♂️ Laserer Alpin Klettersteig",
+    coords: [47.53000, 13.50722],
+    description: "Zavarovana plezalna pot z razgledom na jezero. Primerna za začetnike in družine.",
+    open_hours: "Dostopno od maja do oktobra",
+    entry_fee: "Brezplačno (najem opreme dodatno)",
+    image: "slike/laserer_alpin.jpg",
+  },
+  {
+    name: "🚠 Gosaukammbahn do Zwieselalm",
+    coords: [47.53250, 13.49694],
+    description: "Žičnica do panoramskih pohodniških poti in koče Gablonzer.",
+    open_hours: "Maj do oktober: 8:00 – 17:00",
+    entry_fee: "Odrasli: €20 (povratna karta)",
+    image: "slike/gosaukammbahn.jpg",
+  },
+  {
+  name: "🏔️ Donnerkogel Klettersteig",
+  coords: [47.51667, 13.48306],
+  description: "Zavarovana plezalna pot s spektakularnimi razgledi in znano 'Sky Ladder' – visečo kovinsko lestev nad prepadi.",
+  open_hours: "Dostopno od junija do oktobra (odvisno od vremenskih razmer)",
+  entry_fee: "Brezplačno (najem opreme dodatno)",
+  image: "slike/donnerkogel.jpg",
+},
+];
+
+attractions.forEach(attraction => {
+      L.marker(attraction.coords)
+        .addTo(map)
+        .bindPopup(`
+          <div class="popup-title">${attraction.name}</div>
+          ${attraction.image ? `<img src="${attraction.image}" alt="${attraction.name}" style="width: 100%; border-radius: 8px; margin-bottom: 8px;">` : ''}
+          <div class="popup-desc">${attraction.description}</div>
+          <div class="popup-desc">Odpiralni čas: ${attraction.open_hours}</div>
+          <div class="popup-desc">Vstopnina: ${attraction.entry_fee}</div>`);
+    });
+</script>
+</body>
+</html>
